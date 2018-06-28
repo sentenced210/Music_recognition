@@ -8,30 +8,11 @@ def bpm_detection(file_name):
 
     bpm_extractor = es.RhythmExtractor2013(method="multifeature")
     bpm = bpm_extractor(loader)[0]
-
-    print("BPM: = " + str(int(round(bpm))))
-
-    return bpm
-
-
-def time_signature_detection(file_name):
-    loader = es.MonoLoader(filename=file_name)()
-
-    beat_tracker = es.BeatTrackerDegara()
-    ticks = beat_tracker(loader)
-
-    beats_loudness = es.BeatsLoudness(beats=ticks)
-    loudness, loudness_band_ratio = beats_loudness(loader)
-
-    beatogram_detector = es.Beatogram()
-    beatogram = beatogram_detector(loudness, loudness_band_ratio)
-
-    meter = es.Meter()
-    time_signature = meter(beatogram)
-
-    print("Time signature:" + str(time_signature))
-
-    return time_signature
+    # a = bpm_extractor(loader)[1]
+    # print(len(a))
+    # for i in range(len(a)):
+    #     print(a[i])
+    return int(bpm)
 
 
 def duration_detection(file_name):
@@ -39,7 +20,6 @@ def duration_detection(file_name):
 
     duration_detector = es.Duration()
     duration = duration_detector(loader)
-    print("Duration: " + str(duration))
 
     return duration
 
@@ -73,6 +53,11 @@ def key_and_scale_detection(file_name):
 
     essentia.run(loader)
 
-    print(str(pool['tonal.key_key']) + " " + str(pool['tonal.key_scale']))
+    # print(str(pool['tonal.key_key']) + " " + str(pool['tonal.key_scale']))
 
     return pool['tonal.key_key'], pool['tonal.key_scale']
+
+
+def bar_numbers(numerator, duration, bpm):
+    return int(((duration/60)*bpm)/numerator)
+

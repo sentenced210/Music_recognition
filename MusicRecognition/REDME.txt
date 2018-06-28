@@ -1,0 +1,6 @@
+!!!IMPORTANT!!!
+
+wav file to recognise melody should have sample rate = 44100, bit depth = 16, number of channels = 1 (mono)
+
+!!!IMPORTANT!!!
+
